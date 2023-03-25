@@ -1,3 +1,5 @@
+//! Small CPU tensor library for compile-time macro tensor operations.
+
 use num::complex::Complex64;
 use std::ops::{Add, BitOr, Div, Index, Mul, Sub};
 
