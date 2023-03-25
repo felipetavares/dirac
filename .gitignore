@@ -1,0 +1,12 @@
+.DS_Store
+.idea
+*.log
+tmp/
+
+target/
+
+# Plots and research scripts
+*.py
+
+# Documentation
+doc/
