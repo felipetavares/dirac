@@ -5,7 +5,7 @@ Dirac DSL is a [Dirac notation][dirac-notation] parser and interpreter.
 # Macro System
 
 The primary use of the Dirac DSL is through its macro system. For example, if we
-want to generate the $ \vert + \rangle $ state:
+want to generate the $\vert + \rangle$ state:
 
 $$\frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ 1 \end{bmatrix}$$
 
