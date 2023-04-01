@@ -51,7 +51,6 @@ Where `state` will then have the value:
 - `3|0>` - scalar operations (`+`, `-`, `*`, `/`)
 - `| |0> |` - norm
 - `|0>'` - conjugate transpose 
-- `|0>'` - conjugate transpose 
 
 # REPL
 
