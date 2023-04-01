@@ -49,41 +49,21 @@ fn number(input: &str) -> IResult<&str, Expression> {
     // syntax errors while typing scalars are going to manifest themselves as
     // panics.
 
-    // We are dealing with the imaginary part of a complex number...
-    if num_str.ends_with('i') {
-        if num_str.len() == 1 {
-            Ok((rem, Expression::Scalar(Complex64::new(0.0, 1.0))))
-        } else {
-            Ok((
+    match num_str.strip_suffix('i') {
+        // We are dealing with the imaginary part of a complex number...
+        Some(im_str) => match im_str {
+            "" => Ok((rem, Expression::Scalar(Complex64::new(0.0, 1.0)))),
+            _ => Ok((
                 rem,
-                Expression::Scalar(Complex64::new(
-                    0.0,
-                    num_str[..num_str.len() - 1].parse().unwrap(),
-                )),
-            ))
-        }
-    }
-    // ...and with the real part
-    else {
-        Ok((
+                Expression::Scalar(Complex64::new(0.0, im_str.parse().unwrap())),
+            )),
+        },
+        // ...and with the real part
+        None => Ok((
             rem,
             Expression::Scalar(Complex64::new(num_str.parse().unwrap(), 0.0)),
-        ))
+        )),
     }
-}
-
-// Matches a parenthised expression ( expr )
-fn parenthised(input: &str) -> IResult<&str, Expression> {
-    let (rem, (_, expr, _)) = (char('('), additive, char(')')).parse(input)?;
-
-    Ok((rem, Expression::Parenthised(Box::new(expr))))
-}
-
-// Matches a normalized expression | expr |
-fn norm(input: &str) -> IResult<&str, Expression> {
-    let (rem, (_, expr, _)) = (char('|'), additive, char('|')).parse(input)?;
-
-    Ok((rem, Expression::Norm(Box::new(expr))))
 }
 
 // Matches a bra-ket inner product <bra|ket>
@@ -213,6 +193,20 @@ fn additive(input: &str) -> IResult<&str, Expression> {
     }
 
     Ok((rem, acc))
+}
+
+// Matches a parenthised expression ( expr )
+fn parenthised(input: &str) -> IResult<&str, Expression> {
+    let (rem, (_, expr, _)) = (char('('), additive, char(')')).parse(input)?;
+
+    Ok((rem, Expression::Parenthised(Box::new(expr))))
+}
+
+// Matches a normalized expression | expr |
+fn norm(input: &str) -> IResult<&str, Expression> {
+    let (rem, (_, expr, _)) = (char('|'), additive, char('|')).parse(input)?;
+
+    Ok((rem, Expression::Norm(Box::new(expr))))
 }
 
 // Matches a dirac notation expression

@@ -1,7 +1,10 @@
 //! Small CPU tensor library for compile-time macro tensor operations.
 
 use num::complex::Complex64;
-use std::ops::{Add, BitOr, Div, Index, Mul, Sub};
+use std::{
+    fmt::{self, Display},
+    ops::{Add, BitOr, Div, Index, Mul, Sub},
+};
 
 type R = f64;
 type C = Complex64;
@@ -304,5 +307,24 @@ impl KroneckerProduct for Vec<Tensor> {
             Some(tensor) => tensor,
             None => panic!("Should always be called on a nonempty vector"),
         }
+    }
+}
+
+impl Display for Tensor {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        for y in 0..self.shape.0 {
+            for x in 0..self.shape.1 {
+                match x {
+                    0 => write!(f, "{}", self[(y, x)])?,
+                    _ => write!(f, ", {}", self[(y, x)])?,
+                }
+            }
+
+            if y < self.shape.0 - 1 {
+                writeln!(f, "")?;
+            }
+        }
+
+        Ok(())
     }
 }

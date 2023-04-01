@@ -1,6 +1,6 @@
 [package]
-name = "test-dirac-tensor"
-version = "0.0.0"
+name = "tensor"
+version = "0.1.0"
 edition = "2021"
 description = "Supporting tensor library for quantum machanics macros."
 license = "WTFPL"
