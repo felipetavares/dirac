@@ -2,6 +2,8 @@
 
 Dirac DSL is a [Dirac notation][dirac-notation] parser and interpreter.
 
+[Paper (in review)](https://felipetavares.com/conferences/tavares2023dirac-v1.pdf)
+
 # Macro System
 
 The primary use of the Dirac DSL is through its macro system. For example, if we
